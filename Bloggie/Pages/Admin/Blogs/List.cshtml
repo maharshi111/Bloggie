@@ -1,0 +1,56 @@
+﻿@page
+@model Bloggie.Pages.Admin.Blogs.ListModel
+@{
+}
+<div class="bg-secondary bg-opacity-10 py-2 mb-5">
+    <div class="container">
+        <h1>Blog Posts</h1>
+    </div>
+</div>
+
+@if (Model.BlogPosts != null && Model.BlogPosts.Any())
+{
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Heading</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.BlogPosts)
+                {
+                    <tr>
+                        <td>@i.Id</td>
+                        <td>@i.Heading</td>
+                        <td><a href="/Admin/Blogs/Edit/@i.Id">view</a></td>
+                        @* see when we press view it should be redirected to the Edit page so we did href="/Admin/Blogs/Edit now in the Edit page we
+                want to only populate data of that particular Id only , so we need to pass Id as a route parameter,so to pass it as
+                route parameter we did href="/Admin/Blogs/Edit/@i.Id"
+                *@
+                    </tr>
+                }
+                @*  here we can't do @foreach(var i in BlogPosts)
+            it will throw error The name 'BlogPosts' does not exist in the current context, the reason for this error is
+            In Razor views, properties and methods from the page model (the ListModel class in this case) are accessed through
+            the Model property. This means you need to use Model.BlogPosts instead of just BlogPosts.
+
+            It means if we want to access any property of code behind file in our razor view that we have to write Model.property_name
+
+            *@
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container">
+        <p>No Blog Post were found!</p>
+    </div>
+}
+
+
+
+
+@* the List razor page is used for Reading data from database that is perform R in CRUD *@
