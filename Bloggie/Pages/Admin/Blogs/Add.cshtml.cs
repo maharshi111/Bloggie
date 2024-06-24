@@ -1,6 +1,7 @@
 using Bloggie.Data;
 using Bloggie.Models.Domain;
 using Bloggie.Models.ViewModels;
+using Bloggie.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,12 +9,23 @@ namespace Bloggie.Pages.Admin.Blogs
 {
     public class AddModel : PageModel
     {
-        private readonly BloggieDbContext bloggieDbContext;
 
-        public AddModel(BloggieDbContext bloggieDbContext)
+
+        // private readonly BloggieDbContext bloggieDbContext;
+
+        //public AddModel(BloggieDbContext bloggieDbContext)
+        //{
+        //    this.bloggieDbContext = bloggieDbContext;
+        //}// injecting DbContext , so that we can access the database
+
+        //As we have injected the IBlogPostRepository service  in the program.cs file we now no longer need to inject dbcontext here so commenting the above  part and injecting the 
+        //IBlogPostRepository below
+
+        private readonly IBlogPostRepository blogPostRepository;
+        public AddModel(IBlogPostRepository blogPostRepository)
         {
-            this.bloggieDbContext = bloggieDbContext;
-        }// injecting DbContext , so that we can access the database
+            this.blogPostRepository = blogPostRepository;
+        }
 
         //[BindProperty]
         //public string Heading { get; set; }
@@ -49,8 +61,14 @@ namespace Bloggie.Pages.Admin.Blogs
             };
 
 
-            await bloggieDbContext.BlogPosts.AddAsync(blogPost);
-            await bloggieDbContext.SaveChangesAsync();
+            //await bloggieDbContext.BlogPosts.AddAsync(blogPost);
+            //await bloggieDbContext.SaveChangesAsync();
+
+            // commenting the above part as we no longer need DbContext , below is the replacement of the above part as we have injected the IBlogPostRepository 
+
+           await blogPostRepository.AddAsync(blogPost);
+           
+
             return RedirectToPage("/Admin/Blogs/List");
         }
     }

@@ -1,4 +1,5 @@
 using Bloggie.Data;
+using Bloggie.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BloggieDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieDbConnectionString")));
 //Add DbContext mai jo DbContext banya woh likha , fir options ke through bola ki humko SqlServer use karna hai aur fir uska
 //configuration kiya jisme humne connection string enter karvai 
+
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
 var app = builder.Build();
     
