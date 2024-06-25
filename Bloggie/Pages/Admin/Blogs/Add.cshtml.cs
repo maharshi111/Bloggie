@@ -67,7 +67,7 @@ namespace Bloggie.Pages.Admin.Blogs
             // commenting the above part as we no longer need DbContext , below is the replacement of the above part as we have injected the IBlogPostRepository 
 
            await blogPostRepository.AddAsync(blogPost);
-           
+            TempData["MessageDescription"] = "New Blog Post Created !";
 
             return RedirectToPage("/Admin/Blogs/List");
         }

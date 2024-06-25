@@ -32,6 +32,12 @@ namespace Bloggie.Pages.Admin.Blogs
 
             //
 
+           var messageDescription = (string) TempData["MessageDescription"];
+            if (!string.IsNullOrEmpty(messageDescription)) 
+            {
+                ViewData["MessageDescription"]= messageDescription;
+            }
+
             BlogPosts = (await blogPostRepository.GetAllAsync())?.ToList();// you can also use BlogPosts =(List<BlogPost>) await  blogPostRepository.GetAllAsync();
                                                                             //to explicitly cast IEnumerable to List
         }

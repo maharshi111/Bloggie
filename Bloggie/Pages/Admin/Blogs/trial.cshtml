@@ -1,0 +1,8 @@
+﻿	@page "/home"
+	@model Bloggie.Pages.Admin.Blogs.trialModel
+	@{
+		var htmlContent = "<b>This is bold text</b>";
+	}
+	<p>@htmlContent</p>
+	<p><span>This is inside Html raw tag</span>@Html.Raw(htmlContent)</p>
+	<b>This is bold text using b tag</b>

@@ -8,6 +8,21 @@
     </div>
 </div>
 
+@{
+    var messageDescription = (string)ViewData["MessageDescription"];
+    // since viewData is of object type we are converting it explicitly to string type so that we
+    //easily check whether it is null or empty bystring.IsNullOrEmpty
+}
+
+@if (!string.IsNullOrEmpty(messageDescription))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-5" role="alert">
+        @Html.Raw(messageDescription)
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
 @if (Model.BlogPosts != null && Model.BlogPosts.Any())
 {
     <div class="container">
