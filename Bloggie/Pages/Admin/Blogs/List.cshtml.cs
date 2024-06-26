@@ -1,9 +1,11 @@
 using Bloggie.Data;
 using Bloggie.Models.Domain;
+using Bloggie.Models.ViewModels;
 using Bloggie.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Bloggie.Pages.Admin.Blogs
 {
@@ -32,10 +34,17 @@ namespace Bloggie.Pages.Admin.Blogs
 
             //
 
-           var messageDescription = (string) TempData["MessageDescription"];
-            if (!string.IsNullOrEmpty(messageDescription)) 
+            // var messageDescription = (string) TempData["MessageDescription"];
+            var notificationJson = (String) TempData["Notification"];
+            //if (!string.IsNullOrEmpty(messageDescription)) 
+            //{
+            //    ViewData["MessageDescription"]= messageDescription;
+            //}
+            if (notificationJson != null) 
             {
-                ViewData["MessageDescription"]= messageDescription;
+                ViewData["Notification"] = JsonSerializer.Deserialize<Notification>(notificationJson.ToString());
+
+
             }
 
             BlogPosts = (await blogPostRepository.GetAllAsync())?.ToList();// you can also use BlogPosts =(List<BlogPost>) await  blogPostRepository.GetAllAsync();

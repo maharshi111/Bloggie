@@ -1,9 +1,11 @@
 using Bloggie.Data;
+using Bloggie.Enums;
 using Bloggie.Models.Domain;
 using Bloggie.Models.ViewModels;
 using Bloggie.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace Bloggie.Pages.Admin.Blogs
 {
@@ -67,8 +69,13 @@ namespace Bloggie.Pages.Admin.Blogs
             // commenting the above part as we no longer need DbContext , below is the replacement of the above part as we have injected the IBlogPostRepository 
 
            await blogPostRepository.AddAsync(blogPost);
-            TempData["MessageDescription"] = "New Blog Post Created !";
-
+            //TempData["MessageDescription"] = "New Blog Post Created !";
+            var notification = new Notification
+            {
+                Message = "New Blog Post Created !",
+                Type = NotificationType.Success
+            };
+            TempData["Notification"] = JsonSerializer.Serialize(notification);
             return RedirectToPage("/Admin/Blogs/List");
         }
     }

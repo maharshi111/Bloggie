@@ -9,7 +9,7 @@
 </div>
 
 
-@{
+@* @{
     var messageDescription = (string)ViewData["Message Description"];
     // since viewData is of object type we are converting it explicitly to string type so that we
     //easily check whether it is null or empty bystring.IsNullOrEmpty
@@ -21,7 +21,11 @@
         @Html.Raw(messageDescription)
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-}
+} *@
+
+@* repalcing the above html portion by partial view _Notification.cshtml *@
+
+<partial name="_Notification" for="ViewData" />
 
 @if (Model.BlogPost != null)
 {
