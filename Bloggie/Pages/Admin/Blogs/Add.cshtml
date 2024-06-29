@@ -35,10 +35,19 @@
                             <label for="Short Description" class="form-label">Short Description</label>
                             <input type="text" class="form-control" id="Short Description" asp-for="AddBlogPostRequest.ShortDescription">
                     </div>
+
+
+                    <div class="mb-3">
+                        <label for="featuredImageUpload" class="form-label">Featured Image Upload</label>
+                        <input type="file" id="featuredImageUpload" asp-for="FeaturedImage">
+                          <img src="" id="featuredImageDisplay" style="display:none; width:300px;" />
+                    </div>
+
                     <div class="mb-3">
                         <label for="featuredImageUrl" class="form-label">Featured Image Url</label>
                         <input type="text" class="form-control" id="featuredImageUrl" asp-for="AddBlogPostRequest.FeaturedImageUrl">
                     </div>
+
                     <div class="mb-3">
                         <label for="urlHandle" class="form-label">Url Handle</label>
                         <input type="text" class="form-control" id="urlHandle" asp-for="AddBlogPostRequest.UrlHandle">
@@ -52,7 +61,7 @@
                         <input type="text" class="form-control" id="author" asp-for="AddBlogPostRequest.Author">
                     </div>
                     <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="isVisible" asp-for="AddBlogPostRequest.Visible">
+                    <input class="form-check-input" type="checkbox" id="isVisible" asp-for="AddBlogPostRequest.Visible">
                         <label class="form-check-label" for="isVisible">
                             Is Visible
                         </label>
@@ -63,3 +72,35 @@
           </form>   
     </div>
 </div>
+@section Scripts {
+    <script>
+        var editor = new FroalaEditor('#content', {
+            imageUploadURL: '/api/image'
+        });
+        const featuredImageUploadElement = document.getElementById("featuredImageUpload");
+        const featuredImageUrl = document.getElementById('featuredImageUrl');
+        const featuredImageDisplay = document.getElementById('featuredImageDisplay');
+
+        async function uploadFeatureImage(e) 
+        {
+
+            console.log(e.target.files[0]);
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+            await fetch('/api/image', {
+                method: 'POST',
+                headers: {
+                    Accept: '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => { 
+                    featuredImageUrl.value = result.link;
+                    featuredImageDisplay.style.display = 'block';
+                    featuredImageDisplay.src = result.link;
+                } );
+        }
+        featuredImageUploadElement.addEventListener('change', uploadFeatureImage);
+        console.log("this is outside");
+    </script>
+} 

@@ -29,6 +29,9 @@ namespace Bloggie.Pages.Admin.Blogs
         [BindProperty]
         public BlogPost BlogPost { get; set; }
 
+        [BindProperty]
+        public IFormFile FeaturedImage { get; set; }
+
         public async Task OnGet(Guid id)  // this was intially public void OnGet , see when convert to async then if the method is IAction than write that
                                           // method inside Task , the general notation is async Task<return type method (say IActionResult)>, if the return type 
                                           //of method is void than write like this  public async Task OnGet
@@ -61,7 +64,7 @@ namespace Bloggie.Pages.Admin.Blogs
 
             try
             {
-                throw new Exception();
+                //throw new Exception();
 
                 await blogPostRepository.UpdateAsync(BlogPost);
 
